@@ -1,13 +1,21 @@
-import Keys._
+name := "Scala SBT Template"
 
-name := "scalaGame"
+version := "0.1.0"
+
+scalaVersion := "2.10.3"
 
 organization := "com.marqod"
 
-version := "0.0.1"
+libraryDependencies ++= {
+  	Seq(
+	  "org.scala-lang" % "scala-swing" % scalaVersion.value
+  	)
+}
 
-unmanagedBase <<= baseDirectory { base => base / "lib" }
+mainClass := Some("com.marqod.rogue.GameApp")
 
-fork := true
-
-javaOptions += "-Djava.library.path=./lib/native/linux"
+resolvers ++= Seq("snapshots"     at "http://oss.sonatype.org/content/repositories/snapshots",
+                "releases"        at "http://oss.sonatype.org/content/repositories/releases"
+                )
+ 
+//scalacOptions ++= Seq("-unchecked", "-deprecation")
