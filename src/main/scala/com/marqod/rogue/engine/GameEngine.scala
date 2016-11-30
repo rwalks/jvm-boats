@@ -30,7 +30,7 @@ class GameEngine extends Config{
   }
 
   def updatePlayer(p: PlayerEntity) = {
-    val playerUpdate = p.update()
+    val playerUpdate = p.update(gameState)
     gameState.wakes = gameState.wakes ++ playerUpdate.wakes
   }
 
