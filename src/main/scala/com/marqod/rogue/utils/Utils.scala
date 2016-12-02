@@ -48,6 +48,14 @@ case class Vector2(var x: Double, var y: Double) {
   }
 }
 
+case class Vector3(var x: Double, var y: Double, var z: Double) extends Config {
+
+  def getScreenCoords(d: Double): Vector2 = {
+    val sY = CANVAS_SIZE.y - Math.max(0, 1.0 - (d / HORIZON_D)) * HORIZON_Y
+    Vector2(x,sY)
+  }
+}
+
 class EntityPosition(ox: Double, oy: Double) extends Vector2(ox,oy) with Utils with Config {
   override def set(tx: Double, ty: Double): Vector2 = {
     x = clamp(tx, 0, WORLD_SIZE.x)

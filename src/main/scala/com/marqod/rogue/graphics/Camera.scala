@@ -1,18 +1,17 @@
 package com.marqod.rogue.graphics
 
-import com.marqod.rogue.utils.{Config, EntityPosition, Utils, Vector2}
+import com.marqod.rogue.models.ControlState
+import com.marqod.rogue.utils._
 
 /**
   * Created by ryan.walker on 10/29/16.
   */
 class Camera extends Config{
-  val offset = new EntityPosition(0,0)
+  val position = Vector3(0,0,0)
 
-  def update(playerPos: EntityPosition): Unit = {
-    offset.set(
-      playerPos.x - (CANVAS_SIZE.x / 2),
-      playerPos.y - (CANVAS_SIZE.y / 2)
-    )
+  def update(controls: ControlState): Unit = {
+    if ( controls.up ) {position.z += 1}
+    if ( controls.down ) {position.z -= 1}
   }
 
 }

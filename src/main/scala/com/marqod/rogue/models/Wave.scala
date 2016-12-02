@@ -1,7 +1,7 @@
 package com.marqod.rogue.models
 
 import com.marqod.rogue.art.ArtType
-import com.marqod.rogue.utils.{EntityPosition, EntityRotation, Vector2}
+import com.marqod.rogue.utils.{EntityPosition, EntityRotation, Vector2, Vector3}
 
 /**
   * Created by ryan.walker on 11/12/16.
@@ -12,9 +12,10 @@ class Wave(pos: EntityPosition, wind: Wind) extends Entity(pos) {
   val rotation: EntityRotation = new EntityRotation(wind.rotation.theta)
   val maxWidth = 10 + (Math.random() * 30)
   var dWidth = 0.1
-  val dimensions: Vector2 = Vector2(
-    1,
-    2
+  val dimensions: Vector3 = Vector3(
+    1.0,
+    2.0,
+    0.0
   )
   velocity.set(Vector2(0,wind.magnitude).rotate(rotation.theta))
 
@@ -35,9 +36,10 @@ class Wake(entity: Entity) extends Entity(entity.position.clone()) {
   val rotation: EntityRotation = new EntityRotation(entity.rotation.theta)
   val maxWidth = 60
   var dWidth = entity.velocity.magnitude() / 4
-  val dimensions: Vector2 = Vector2(
+  val dimensions: Vector3 = Vector3(
     entity.dimensions.x,
-    2
+    2.0,
+    0.0
   )
   val boatBack = new Vector2(0, entity.dimensions.y / 2)
   position.move(boatBack.rotate(entity.rotation.theta))

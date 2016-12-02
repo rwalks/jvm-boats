@@ -2,7 +2,7 @@ package com.marqod.rogue.models
 
 import com.marqod.rogue.art.ArtType
 import com.marqod.rogue.engine.GameState
-import com.marqod.rogue.utils.{EntityPosition, EntityRotation, Vector2}
+import com.marqod.rogue.utils.{EntityPosition, EntityRotation, Vector2, Vector3}
 
 import scala.collection.mutable.ArrayBuffer
 
@@ -14,7 +14,7 @@ class PlayerEntity(position: EntityPosition) extends Entity(position) {
   val artType = ArtType.PLAYER_ART
   val controlState = ControlState()
   val rotation: EntityRotation = new EntityRotation(0)
-  val dimensions = Vector2(10,26)
+  val dimensions = Vector3(10,10,20)
   val dVelocity = Vector2(0,0)
 
   def update(gameState: GameState): EntityReturn = {

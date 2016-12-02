@@ -3,37 +3,50 @@ package com.marqod.rogue.art
 import java.awt.geom.GeneralPath
 
 import com.marqod.rogue.models.Entity
+import com.marqod.rogue.utils.{Config, Vector3}
 
 import scala.swing.Graphics2D
 
 /**
   * Created by ryan.walker on 11/12/16.
   */
-class Polygon(val points: List[(Double,Double)]) {
+class Polygon(var points: List[Vector3]) extends Config {
 
-  def drawFill(g: Graphics2D, e: Entity) = {
+  def draw(g: Graphics2D, e: Entity) = {
+    val rot = e.rotation.theta
+
+    val lX = (e.dimensions.x / 2) * UNIT_SIZE.x
+    val lY = (e.dimensions.y / 2) * UNIT_SIZE.y
+    val lZ = -e.dimensions.z * UNIT_SIZE.y
     val polygon: GeneralPath = new GeneralPath()
-    val lX = e.dimensions.x / 2
-    val lY = e.dimensions.y / 2
     polygon.moveTo(
-      points.last._1 * lX,
-      points.last._2 * lY
+      points.last.x * lX,
+      points.last.z * lZ
     )
     points.foreach { p =>
       polygon.lineTo(
-        p._1 * lX,
-        p._2 * lY
+        p.x * lX,
+        p.z * lZ
       )
     }
     polygon.closePath()
-    g.fill(polygon)
+    g.draw(polygon)
+    //g.fill(polygon)
   }
 
-  def mirror(): Polygon = {
+  def mirrorX(): Polygon = {
     new Polygon(
       points ++ points.slice(1,points.size-1).reverse.map { point =>
-        (-point._1, point._2)
+        Vector3(-point.x, point.y, point.z)
       }
     )
   }
 }
+
+case class Square() extends Polygon(List(
+      Vector3(1.0, 0.0, 1.0),
+      Vector3(1.0, 0.0, 0.0),
+      Vector3(-1.0, 0.0, 0.0),
+      Vector3(-1.0, 0.0, 1.0)
+))
+
