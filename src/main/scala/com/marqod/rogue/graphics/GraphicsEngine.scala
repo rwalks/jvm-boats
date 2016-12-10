@@ -1,11 +1,12 @@
 package com.marqod.rogue.graphics
 
-import com.marqod.rogue.art.{ArtHolder}
+import java.awt.geom.AffineTransform
+
+import com.marqod.rogue.art.ArtHolder
 import com.marqod.rogue.engine.GameEngine
-import com.marqod.rogue.utils.Config
+import com.marqod.rogue.utils.{Colors, Config, Vector2}
 
 import scala.swing.Graphics2D
-import com.marqod.rogue.utils.Colors
 
 /**
   * Created by ryan.walker on 10/29/16.
@@ -20,7 +21,11 @@ class GraphicsEngine(engine: GameEngine, canvas: Canvas) extends Config with Art
   }
 
   def drawScene(g: Graphics2D) = {
-    drawWater(g)
+
+    g.scale(1.0, 0.5)
+    g.shear(-1, 0.5)
+    //
+    drawWater(g, camera.offset)
     //waves
     engine.gameState.waves.foreach { w =>
       waveArt.draw(g,w,camera.offset)
@@ -30,12 +35,15 @@ class GraphicsEngine(engine: GameEngine, canvas: Canvas) extends Config with Art
       wakeArt.draw(g,w,camera.offset)
     }
     //player
-    playerArt.draw(g,engine.gameState.player,camera.offset)
+    playerArt.draw(g,engine.gameState.player, camera.offset)
     //stuff
   }
 
-  private def drawWater(g: Graphics2D) = {
-    g.setColor(Colors.blue)
-    g.fillRect(0, 0, CANVAS_SIZE.x.toInt, CANVAS_SIZE.y.toInt)
+  private def drawWater(g: Graphics2D, offset: Vector2) = {
+    val gCon: Graphics2D = g.create().asInstanceOf[Graphics2D]
+    gCon.translate(-offset.x,-offset.y)
+    gCon.setColor(Colors.blue)
+    gCon.fillRect(0, 0, WORLD_SIZE.x.toInt, WORLD_SIZE.y.toInt)
+    gCon.dispose()
   }
 }

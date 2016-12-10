@@ -43,6 +43,10 @@ case class Vector2(var x: Double, var y: Double) {
     this
   }
 
+  def scale(d: Double): Vector2 = {
+    set(x * d, y * d)
+  }
+
   override def clone(): Vector2 = {
     new Vector2(x,y)
   }

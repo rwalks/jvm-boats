@@ -36,14 +36,15 @@ class PlayerEntity(position: EntityPosition) extends Entity(position) {
 
   def applyForces(): Unit = {
     velocity.move(dVelocity)
+    velocity.scale(0.9)
     position.move(velocity)
   }
 
   def applyControlState(): Unit = {
     //v
 
-    if ( controlState.up ) { dVelocity.move(Vector2(0,-1).rotate(rotation.theta)) }
-    if ( controlState.down ) { dVelocity.move(Vector2(0,1).rotate(rotation.theta)) }
+    if ( controlState.up ) { dVelocity.move(Vector2(0,-0.1).rotate(rotation.theta)) }
+    if ( controlState.down ) { dVelocity.move(Vector2(0,0.1).rotate(rotation.theta)) }
     //rotation
   }
 
