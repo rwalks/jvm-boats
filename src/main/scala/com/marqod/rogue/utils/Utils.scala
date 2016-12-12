@@ -75,6 +75,17 @@ class EntityPosition(ox: Double, oy: Double) extends Vector2(ox,oy) with Utils w
 
 }
 
+case class Vector3(var x: Double, var y: Double, var z: Double) {
+
+  def rotate(theta: Double): Vector3 = {
+    val cos = Math.cos(theta);
+    val sin = Math.sin(theta);
+    val oX = cos * x - sin * y
+    val oY = sin * x + cos * y
+    Vector3(oX,oY,z)
+  }
+}
+
 class EntityRotation(t: Double) {
   var theta = t
 

@@ -16,7 +16,7 @@ abstract class Art {
 
     val gCon: Graphics2D = g.create().asInstanceOf[Graphics2D]
     gCon.translate(dX,dY)
-    gCon.rotate(entity.rotation.theta)
+ //   gCon.rotate(entity.rotation.theta)
     drawClass(gCon, entity)
     gCon.dispose()
   }

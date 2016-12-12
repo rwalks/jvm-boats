@@ -1,7 +1,7 @@
 package com.marqod.rogue.models
 
 import com.marqod.rogue.art.ArtType
-import com.marqod.rogue.utils.{EntityPosition, EntityRotation, Vector2}
+import com.marqod.rogue.utils.{EntityPosition, EntityRotation, Vector2, Vector3}
 
 import scala.collection.mutable.ArrayBuffer
 
@@ -10,7 +10,7 @@ import scala.collection.mutable.ArrayBuffer
   */
 abstract class Entity(val position: EntityPosition) {
   val rotation: EntityRotation
-  val dimensions: Vector2
+  val dimensions: Vector3 = Vector3(30,30,30)
   val artType: ArtType.Value
   val velocity: Vector2 = new Vector2(1,0)
 }

@@ -27,6 +27,7 @@ class GraphicsEngine(engine: GameEngine, canvas: Canvas) extends Config with Art
     //
     drawWater(g, camera.offset)
     //waves
+
     engine.gameState.waves.foreach { w =>
       waveArt.draw(g,w,camera.offset)
     }

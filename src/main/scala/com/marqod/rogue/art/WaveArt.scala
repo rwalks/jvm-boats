@@ -11,6 +11,7 @@ import scala.swing.Graphics2D
 class WaveArt extends Art {
 
   def drawClass(g: Graphics2D, w: Entity) = {
+    g.rotate(w.rotation.theta)
     g.setColor(Colors.brightBlue)
     g.fill3DRect(
       (-w.dimensions.x / 2).toInt,
@@ -22,7 +23,8 @@ class WaveArt extends Art {
 
 class WakeArt extends Art {
   def drawClass(g: Graphics2D, w: Entity) = {
-    g.setColor(Colors.getFoamBlue(1 - (w.dimensions.x * 2 / 60)))
+    g.rotate(w.rotation.theta)
+    g.setColor(Colors.getFoamBlue(1 - (w.dimensions.x  / 60)))
     val oX = (-w.dimensions.x / 2).toInt
     val oY = (-w.dimensions.y / 2).toInt
     g.fill3DRect(

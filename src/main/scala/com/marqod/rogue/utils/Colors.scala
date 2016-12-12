@@ -19,6 +19,7 @@ object Colors {
   val brightCyan = new Color(0, 255, 255)
   val brightWhite = new Color(255, 255, 255)
   val foamBlue = new Color(0.2F,0.2F,0.9F,0.6F)
+  val brown = new Color(139,69,19)
 
   def getFoamBlue(a: Double): Color = {
     val alpha = Math.max(0, a * 0.8).toFloat
