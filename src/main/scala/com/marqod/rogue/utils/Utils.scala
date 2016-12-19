@@ -50,6 +50,10 @@ case class Vector2(var x: Double, var y: Double) {
   override def clone(): Vector2 = {
     new Vector2(x,y)
   }
+
+  def distance(ox: Double, oy: Double): Double = {
+    Math.sqrt(Math.pow((ox - x),2)+Math.pow((oy - y),2))
+  }
 }
 
 class EntityPosition(ox: Double, oy: Double) extends Vector2(ox,oy) with Utils with Config {

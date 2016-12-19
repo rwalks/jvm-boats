@@ -10,8 +10,8 @@ class Camera extends Config{
 
   def update(playerPos: EntityPosition): Unit = {
     offset.set(
-      playerPos.x - (CANVAS_SIZE.x * 0.8),
-      playerPos.y - (CANVAS_SIZE.y * 0.4)
+      playerPos.x - CAMERA_PROJ_OFFSET.x,
+      playerPos.y - CAMERA_PROJ_OFFSET.y
     )
   }
 

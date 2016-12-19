@@ -10,6 +10,8 @@ import com.marqod.rogue.utils._
 
 object GameApp extends SimpleSwingApplication with Config {
 
+  var currentTime = System.currentTimeMillis()
+
   def top = new MainFrame {
     title = "NauticalNelly"
 
@@ -52,10 +54,14 @@ object GameApp extends SimpleSwingApplication with Config {
       }
     }
 
-    Timer(1000 / FPS) {
-      gameEngine.update(messenger)
-      graphicsEngine.draw()
-    }
+      Timer(1000 / FPS) {
+          val tempTime = System.currentTimeMillis()
+        println(tempTime - currentTime)
+          currentTime = tempTime
+          gameEngine.update(messenger)
+          graphicsEngine.draw()
+      }
+
   }
 }
 

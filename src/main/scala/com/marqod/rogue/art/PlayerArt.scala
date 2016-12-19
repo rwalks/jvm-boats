@@ -19,45 +19,66 @@ class PlayerArt extends Art {
     Vector3(0.3, -0.6, 0),
     Vector3(0.3, 0.9, 0),
     Vector3(0.0, 0.9, 0)
-  )).mirror()
+  ), Colors.red).mirror()
 
-  val bottomPanels = new PanelSet(List(
-    new Polygon(List(Vector3(0, 1.0, deckZ),Vector3(0.5, 1.0, deckZ),Vector3(0.3, 0.9, 0.0),Vector3(0, 0.9, 0))),
-    new Polygon(List(Vector3(0.5, 1.0, deckZ),Vector3(0.5, -0.8, deckZ),Vector3(0.3, -0.6, 0.0),Vector3(0.3, 0.9, 0))),
-  new Polygon(List(Vector3(0.5, -0.8, deckZ),Vector3(0.0, -1.0, deckZ),Vector3(0.0, -0.8, 0.0),Vector3(0.3, -0.6, 0)))
-  )).mirror()
+  val bottomPanels = mirrorPolys(List(
+    new Polygon(List(Vector3(0, 1.0, deckZ),Vector3(0.5, 1.0, deckZ),Vector3(0.3, 0.9, 0.0),Vector3(0, 0.9, 0)), Colors.brown),
+    new Polygon(List(Vector3(0.5, 1.0, deckZ),Vector3(0.5, -0.8, deckZ),Vector3(0.3, -0.6, 0.0),Vector3(0.3, 0.9, 0)), Colors.brown),
+    new Polygon(List(Vector3(0.5, -0.8, deckZ),Vector3(0.0, -1.0, deckZ),Vector3(0.0, -0.8, 0.0),Vector3(0.3, -0.6, 0)), Colors.brown)
+  ))
 
-  val playerPoly2 = new Polygon(List(
+  val playerPoly2 = List(new Polygon(List(
     Vector3(0.0, -1.0, deckZ),
     Vector3(0.5, -0.8, deckZ),
     Vector3(0.5, 1.0, deckZ),
     Vector3(0.0, 1.0, deckZ)
-  )).mirror()
+  ), Colors.red).mirror())
 
   //mast
-  val mastZ = 1
-  val mastPanels = new PanelSet(List(
-    new Polygon(List(Vector3(0, 0.1, 0), Vector3(0.1, 0, 0), Vector3(0.1, 0, mastZ), Vector3(0, 0.1, mastZ))),
-    new Polygon(List(Vector3(0.1, 0, 0), Vector3(0, -0.1, 0), Vector3(0, -0.1, mastZ), Vector3(0.1, 0, mastZ))),
-    new Polygon(List(Vector3(0, -0.1, 0), Vector3(-0.1, 0, 0), Vector3(-0.1, 0, mastZ), Vector3(0, -0.1, mastZ))),
-    new Polygon(List(Vector3(-0.1, 0, 0), Vector3(0, 0.1, 0), Vector3(0, 0.1, mastZ), Vector3(-0.1, 0, mastZ)))
-  ))
+  val mastPos = Vector3(0,-0.2,0)
+  val mastSize = Vector3(0.05,0.05,1.5)
+  val mastPanels = List(
+    new Polygon(List(Vector3(mastPos.x, mastPos.y + mastSize.y, mastPos.z), Vector3(mastPos.x + mastSize.x, mastPos.y, mastPos.z), Vector3(mastPos.x + mastSize.x, mastPos.y, mastPos.z + mastSize.z), Vector3(mastPos.x, mastPos.y + mastSize.y, mastPos.z + mastSize.z)), Colors.yellow),
+    new Polygon(List(Vector3(mastPos.x + mastSize.x, mastPos.y, mastPos.z), Vector3(mastPos.x, mastPos.y - mastSize.y, mastPos.z), Vector3(mastPos.x, mastPos.y - mastSize.y, mastSize.z), Vector3(mastPos.x + mastSize.x, mastPos.y, mastPos.z + mastSize.z)), Colors.yellow),
+    new Polygon(List(Vector3(mastPos.x, mastPos.y - mastSize.y, mastPos.z), Vector3(mastPos.x - mastPos.x, mastPos.y, mastPos.z), Vector3(mastPos.x - mastSize.x, mastPos.y, mastPos.z), Vector3(mastPos.x, mastPos.y - mastSize.y, mastPos.z)), Colors.yellow),
+    new Polygon(List(Vector3(mastPos.x - mastSize.x, mastPos.y, mastPos.z), Vector3(mastPos.x, mastPos.y + mastSize.y, mastPos.z), Vector3(mastPos.x, mastPos.y + mastSize.y, mastPos.z + mastSize.z), Vector3(mastPos.x - mastSize.x, mastPos.y, mastPos.z + mastSize.z)), Colors.yellow)
+  )
+
+  val sailPos = Vector3(mastPos.x, mastPos.y + mastSize.y, 0.4)
+  val sailPolys = List(
+    new Polygon(List(Vector3(sailPos.x, sailPos.y, sailPos.z),Vector3(sailPos.x, sailPos.y, 1.45),Vector3(sailPos.x,sailPos.y+0.1,1.45),Vector3( sailPos.x, 1.0, sailPos.z)),Colors.purple)
+  )
+
+  val artMap: Map[Int, List[Polygon]] = loadArt()
+
+  def loadArt(): Map[Int, List[Polygon]] = {
+    0 to 62 map { d =>
+      d -> generatePolys(d / 10.0)
+    } toMap
+  }
+
+  def generatePolys(theta: Double): List[Polygon] = {
+    List(playerPoly.rotate(theta)) ++
+      (bottomPanels ++ mastPanels).map(_.rotate(theta)).sortWith(sortPolygons) ++
+      sailPolys.map(_.rotate(theta)).sortWith(sortPolygons)
+  }
 
   def drawClass(g: Graphics2D, p: Entity) = {
-    g.setColor(Colors.red)
-    playerPoly.drawFill(g, p)
-    g.setColor(Colors.brown)
-    bottomPanels.draw(g, p)
-    g.setColor(Colors.brightRed)
-    mastPanels.draw(g,p)
-    //playerPoly2.drawFill(g, p)
-    /*
-    g.fill3DRect(
-      (-p.dimensions.x / 2).toInt,
-      (-p.dimensions.y / 2).toInt,
-      p.dimensions.x.toInt,p.dimensions.y.toInt,true
-    )
-    */
+    val theta = ((p.rotation.theta % (Math.PI * 2)) * 10).toInt
+    artMap.getOrElse(theta, List()) foreach { poly =>
+      poly.drawFill(g)
+    }
+  }
+
+  def sortPolygons(p1: Polygon, p2: Polygon) = {
+    p1.originDistance < p2.originDistance
+  }
+
+
+  def mirrorPolys(polys: List[Polygon]): List[Polygon] = {
+    polys ++ polys.reverse.map { panel =>
+      new Polygon(panel.points.map( p => Vector3(-p.x, p.y, p.z)), panel.color)
+    }
   }
 
 }
