@@ -3,14 +3,14 @@ package com.marqod.rogue.art
 import java.awt.geom.GeneralPath
 
 import com.marqod.rogue.models.Entity
-import com.marqod.rogue.utils.{Colors, Vector3}
+import com.marqod.rogue.utils.{Colors, Config, Vector3}
 
 import scala.swing.Graphics2D
 
 /**
   * Created by ryan.walker on 11/12/16.
   */
-class PlayerArt extends Art {
+class PlayerArt extends Art with Config {
 
   val deckZ = 0.3
 
@@ -63,8 +63,14 @@ class PlayerArt extends Art {
       sailPolys.map(_.rotate(theta)).sortWith(sortPolygons)
   }
 
+  var t = 0.0
+  var dt = 0.001
+
   def drawClass(g: Graphics2D, p: Entity) = {
-    val theta = ((p.rotation.theta % (Math.PI * 2)) * 10).toInt
+    t += dt
+    if (t < -0.1 || t > 0.1) { dt = -dt }
+    g.rotate(t)
+    val theta = (p.rotation.theta * 10).toInt
     artMap.getOrElse(theta, List()) foreach { poly =>
       poly.drawFill(g)
     }

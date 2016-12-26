@@ -8,7 +8,6 @@ import com.marqod.rogue.utils.{EntityPosition, EntityRotation, Vector2, Vector3}
   */
 class Wave(pos: EntityPosition, wind: Wind) extends Entity(pos) {
 
-  val artType = ArtType.WAVE_ART
   val rotation: EntityRotation = new EntityRotation(wind.rotation.theta)
   val maxWidth = 10 + (Math.random() * 30)
   var dWidth = 0.1
@@ -32,7 +31,6 @@ class Wave(pos: EntityPosition, wind: Wind) extends Entity(pos) {
 
 class Wake(entity: Entity) extends Entity(entity.position.clone()) {
 
-  val artType = ArtType.WAVE_ART
   val rotation: EntityRotation = new EntityRotation(entity.rotation.theta)
   val maxWidth = 60
   var dWidth = entity.velocity.magnitude() / 4

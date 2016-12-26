@@ -16,7 +16,6 @@ abstract class Art {
 
     val gCon: Graphics2D = g.create().asInstanceOf[Graphics2D]
     gCon.translate(dX,dY)
- //   gCon.rotate(entity.rotation.theta)
     drawClass(gCon, entity)
     gCon.dispose()
   }
@@ -29,6 +28,7 @@ trait ArtHolder {
   val waveArt = new WaveArt()
   val playerArt = new PlayerArt()
   val wakeArt = new WakeArt()
+  val islandArt = new IslandArt()
 }
 
 object ArtType extends Enumeration {

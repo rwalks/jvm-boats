@@ -35,6 +35,10 @@ class GraphicsEngine(engine: GameEngine, canvas: Canvas) extends Config with Art
       wakeArt.draw(g,w,camera.offset)
     }
 
+    engine.gameState.islands.foreach { i =>
+      islandArt.draw(g,i,camera.offset)
+    }
+
     playerArt.draw(g,engine.gameState.player, camera.offset)
   }
 

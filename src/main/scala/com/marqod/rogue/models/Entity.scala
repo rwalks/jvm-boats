@@ -11,7 +11,6 @@ import scala.collection.mutable.ArrayBuffer
 abstract class Entity(val position: EntityPosition) {
   val rotation: EntityRotation
   val dimensions: Vector3 = Vector3(30,30,30)
-  val artType: ArtType.Value
   val velocity: Vector2 = new Vector2(1,0)
 }
 

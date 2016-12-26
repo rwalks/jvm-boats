@@ -90,7 +90,7 @@ case class Vector3(var x: Double, var y: Double, var z: Double) {
   }
 }
 
-class EntityRotation(t: Double) {
+case class EntityRotation(t: Double) {
   var theta = t
 
   def set(t: Double): Unit = {
@@ -99,6 +99,10 @@ class EntityRotation(t: Double) {
 
   def rotate(t: Double) = {
     theta += t
+    if (theta < 0) {
+      theta = Math.PI * 2 + theta
+    }
+    theta = theta % (Math.PI * 2)
   }
 }
 

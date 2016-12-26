@@ -11,7 +11,6 @@ import scala.collection.mutable.ArrayBuffer
   */
 
 class PlayerEntity(position: EntityPosition) extends Entity(position) {
-  val artType = ArtType.PLAYER_ART
   val controlState = ControlState()
   val rotation: EntityRotation = new EntityRotation(0)
   val dVelocity = Vector2(0,0)

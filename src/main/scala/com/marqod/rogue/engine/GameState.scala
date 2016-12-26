@@ -15,17 +15,10 @@ class GameState extends Config {
   val wind = new Wind()
   var waves: ArrayBuffer[Wave] = ArrayBuffer[Wave]()
   var wakes: ArrayBuffer[Wake] = ArrayBuffer[Wake]()
-
-  val water: Array[Array[Double]] = generateWater()
+  var islands: ArrayBuffer[Island] = ArrayBuffer[Island]()
 
   def getDrawTargets(offset: Vector2): List[Entity] = {
     List(player)
-  }
-
-  def generateWater(): Array[Array[Double]] = {
-    Array.range(0,WAVE_COUNT.x.toInt).map( _ =>
-      Array.range(0,WAVE_COUNT.y.toInt).map(_ => 0.0)
-    )
   }
 
 }
