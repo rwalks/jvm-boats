@@ -16,6 +16,8 @@ class GameState extends Config {
   var waves: ArrayBuffer[Wave] = ArrayBuffer[Wave]()
   var wakes: ArrayBuffer[Wake] = ArrayBuffer[Wake]()
   var islands: ArrayBuffer[Island] = ArrayBuffer[Island]()
+//
+  islands += new Island(new EntityPosition(100,100))
 
   def getDrawTargets(offset: Vector2): List[Entity] = {
     List(player)

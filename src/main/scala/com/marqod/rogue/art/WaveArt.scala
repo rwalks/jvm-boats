@@ -1,6 +1,6 @@
 package com.marqod.rogue.art
 
-import com.marqod.rogue.models.{Entity, Wave}
+import com.marqod.rogue.models.{Wake, Wave}
 import com.marqod.rogue.utils.Colors
 
 import scala.swing.Graphics2D
@@ -8,9 +8,9 @@ import scala.swing.Graphics2D
 /**
   * Created by ryan.walker on 11/12/16.
   */
-class WaveArt extends Art {
+class WaveArt extends Art[Wave] {
 
-  def drawClass(g: Graphics2D, w: Entity) = {
+  def drawClass(g: Graphics2D, w: Wave) = {
     g.rotate(w.rotation.theta)
     g.setColor(Colors.brightBlue)
     g.fill3DRect(
@@ -21,8 +21,8 @@ class WaveArt extends Art {
   }
 }
 
-class WakeArt extends Art {
-  def drawClass(g: Graphics2D, w: Entity) = {
+class WakeArt extends Art[Wake] {
+  def drawClass(g: Graphics2D, w: Wake) = {
     g.rotate(w.rotation.theta)
     g.setColor(Colors.getFoamBlue(1 - (w.dimensions.x  / 60)))
     val oX = (-w.dimensions.x / 2).toInt

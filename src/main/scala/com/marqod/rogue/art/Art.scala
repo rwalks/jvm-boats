@@ -8,9 +8,9 @@ import scala.swing.Graphics2D
 /**
   * Created by ryan.walker on 11/12/16.
   */
-abstract class Art {
+abstract class Art[T <: Entity] {
 
-  def draw(g: Graphics2D, entity: Entity, offset: Vector2) = {
+  def draw(g: Graphics2D, entity: T, offset: Vector2) = {
     val dX = entity.position.x - offset.x
     val dY = entity.position.y - offset.y
 
@@ -20,7 +20,7 @@ abstract class Art {
     gCon.dispose()
   }
 
-  def drawClass(g: Graphics2D, entity: Entity): Unit
+  def drawClass(g: Graphics2D, entity: T): Unit
 
 }
 
@@ -29,8 +29,4 @@ trait ArtHolder {
   val playerArt = new PlayerArt()
   val wakeArt = new WakeArt()
   val islandArt = new IslandArt()
-}
-
-object ArtType extends Enumeration {
-  val WAVE_ART, PLAYER_ART, WAKE_ART = Value
 }

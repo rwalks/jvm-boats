@@ -1,6 +1,5 @@
 package com.marqod.rogue.models
 
-import com.marqod.rogue.art.ArtType
 import com.marqod.rogue.utils.{EntityPosition, EntityRotation, Vector2, Vector3}
 
 /**

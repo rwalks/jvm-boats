@@ -1,6 +1,5 @@
 package com.marqod.rogue.models
 
-import com.marqod.rogue.art.ArtType
 import com.marqod.rogue.engine.GameState
 import com.marqod.rogue.utils.{EntityPosition, EntityRotation, Vector2, Vector3}
 
@@ -39,10 +38,9 @@ class PlayerEntity(position: EntityPosition) extends Entity(position) {
   }
 
   def applyControlState(): Unit = {
-    //v
 
     if ( controlState.up ) { dVelocity.move(Vector2(0,-0.1).rotate(rotation.theta)) }
-    if ( controlState.down ) { dVelocity.move(Vector2(0,0.1).rotate(rotation.theta)) }
+   // if ( controlState.down ) { dVelocity.move(Vector2(0,0.1).rotate(rotation.theta)) }
     //rotation
   }
 

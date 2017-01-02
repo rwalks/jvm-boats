@@ -1,8 +1,6 @@
 package com.marqod.rogue.art
 
-import java.awt.geom.GeneralPath
-
-import com.marqod.rogue.models.Entity
+import com.marqod.rogue.models.{PlayerEntity}
 import com.marqod.rogue.utils.{Colors, Config, Vector3}
 
 import scala.swing.Graphics2D
@@ -10,7 +8,7 @@ import scala.swing.Graphics2D
 /**
   * Created by ryan.walker on 11/12/16.
   */
-class PlayerArt extends Art with Config {
+class PlayerArt extends Art[PlayerEntity] with Config {
 
   val deckZ = 0.3
 
@@ -66,7 +64,7 @@ class PlayerArt extends Art with Config {
   var t = 0.0
   var dt = 0.001
 
-  def drawClass(g: Graphics2D, p: Entity) = {
+  def drawClass(g: Graphics2D, p: PlayerEntity) = {
     t += dt
     if (t < -0.1 || t > 0.1) { dt = -dt }
     g.rotate(t)
